@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'feed'
+LOGOUT_REDIRECT_URL = 'frontpage'
 
 # Application definition
 
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
 
     'apps.core',
     'apps.jitterprofile',
+    'apps.feed',
 ]
 
 MIDDLEWARE = [
