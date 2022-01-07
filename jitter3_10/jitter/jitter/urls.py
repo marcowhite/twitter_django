@@ -19,7 +19,7 @@ from django.contrib.auth import views
 
 from apps.core.views import  frontpage , signup
 from apps.feed.views import feed, search
-from apps.jitterprofile.views import jitterprofile, follow_jitter, unfollow_jitter
+from apps.jitterprofile.views import jitterprofile, follow_jitter, unfollow_jitter, followers
 
 from apps.feed.api import api_add_jitt
 urlpatterns = [
@@ -35,6 +35,7 @@ urlpatterns = [
     path('feed/', feed ,name='feed'),
     path('search/', search ,name='search'),
     path('u/<str:username>/', jitterprofile ,name='jitterprofile'),
+    path('u/<str:username>/followers', followers, name='followers'),
     path('u/<str:username>/follow', follow_jitter ,name='follow_jitter'),
     path('u/<str:username>/unfollow', unfollow_jitter ,name='unfollow_jitter'),
 

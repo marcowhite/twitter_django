@@ -27,3 +27,8 @@ def unfollow_jitter(request, username):
     request.user.jitterprofile.follow.remove(user.jitterprofile)
 
     return redirect('jitterprofile', username = username)
+
+def followers(request, username):
+    user = get_object_or_404(User, username=username)
+
+    return render(request, 'jitterprofile/followers.html', {'user': user})
