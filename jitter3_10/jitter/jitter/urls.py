@@ -18,6 +18,7 @@ from django.urls import path
 from django.contrib.auth import views
 from apps.core.views import  frontpage , signup
 from apps.feed.views import feed
+from apps.feed.api import api_add_jitt
 urlpatterns = [
 
     #
@@ -29,7 +30,9 @@ urlpatterns = [
     #
     #
     path('feed/', feed ,name='feed'),
-
+    #
+    # API
+    path('api/add_jitt/',api_add_jitt,name='api_add_jitt'),
     #
     # Admin
     path('admin/', admin.site.urls),

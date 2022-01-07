@@ -1,11 +1,83 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="container" id="feedapp">
     <div class="columns">
         <div class="column is-12">
-            <h1 class="title">My feed</h1>
+            <div class="warpper-form">
+                <form v-on:submit.prevent="submitJitt">
+                    <div class="field">
+                        <div class="control">
+                            <textarea class="textarea" v-model="body" placeholder="What are you jitting?"></textarea>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-success">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="wrapper-jitts">
+              {% for jitt in jitts %}
+              <div class="jitt">
+                <p class="name">{{ jitt.created_by.username }}</p>
+                <p>{{ jitt.body }}</p>
+                <p class="info">{{ jitt.created_at }}</p>
+              </div>
+              {% endfor %}
+                <div class="jitt" v-for="jitt in jitts">
+                    <p class="name">[[jitt.jitter]]</p>
+                    <p>[[jitt.body]]</p>
+                    <p class="info"> [[jitt.created_at]]</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    new Vue({
+        el: '#feedapp',
+        delimiters: ['[[', ']]'],
+        data () {
+            return {
+                jitts: [],
+                body: '',
+                jitter: '{{ request.user.username }}',
+                created_at: 'Now'
+            }
+        },
+        methods: {
+            submitJitt(){
+                console.log('submitJitt');
+
+                if (this.body.length>0){
+                    var jitt = {
+                        'body': this.body,
+                        'jitter': this.jitter,
+                        'created_at': this.created_at
+                    };
+                    this.jitts.unshift(jitt);
+                    //send to backend
+                    fetch('/api/add_jitt/',{
+                        method: 'POST',
+                        headers:{
+                            'Content-Type':'application/json',
+                            'X-CSRFToken': '{{csrf_token}}',
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(jitt),
+                    }).then((response) => {
+                        console.log(response);
+                    }).catch((error)=>{
+                        console.log(error);
+                    })
+                }
+            }
+        }
+    })
+</script>
 {% endblock %}
