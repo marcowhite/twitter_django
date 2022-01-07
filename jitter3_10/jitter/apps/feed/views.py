@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
 # Create your views here.
 from .models import Jitt
 
@@ -15,3 +15,18 @@ def feed(request):
     jitts = Jitt.objects.filter(created_by_id__in=userids)
 
     return render(request, 'feed/feed.html', {'jitts':jitts})
+
+@login_required
+def search(request):
+    query = request.GET.get('query','')
+
+    if len(query)>0:
+        jitters = User.objects.filter(username__icontains=query)
+    else:
+        jitters = []
+
+    context = {
+        'query':query,
+        'jitters': jitters
+    }
+    return render(request, 'feed/search.html', context)

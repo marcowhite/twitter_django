@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views
+
 from apps.core.views import  frontpage , signup
-from apps.feed.views import feed
+from apps.feed.views import feed, search
+from apps.jitterprofile.views import jitterprofile
+
 from apps.feed.api import api_add_jitt
 urlpatterns = [
 
@@ -30,6 +33,8 @@ urlpatterns = [
     #
     #
     path('feed/', feed ,name='feed'),
+    path('search/', search ,name='search'),
+    path('u/<str:username>/', jitterprofile ,name='jitterprofile'),
     #
     # API
     path('api/add_jitt/',api_add_jitt,name='api_add_jitt'),

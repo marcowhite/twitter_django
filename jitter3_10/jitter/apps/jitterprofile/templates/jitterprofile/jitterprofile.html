@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+<div class="container">
+    <div class="columns">
+        <div class="column is-12">
+            <h1 class="title">{{user.username}}</h1>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column is-8">
+            <div class="wrapper-jitts">
+                {% for jitt in user.jitts.all %}
+                    <div class="jitt">
+                        <p class="name">{{jitt.created_by.username}}</p>
+                        <p>{{ jitt.body }}</p>
+                        <p class="info">{{ jitt.created_at|naturaltime}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
