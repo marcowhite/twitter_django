@@ -24,7 +24,7 @@
             <hr>
             <div class="search-results">
                 {% for jitter in jitters %}
-                    <p>{{ jitter.username}}</p>
+                    <p><a href="{% url 'jitterprofile' jitter.username%}">{{ jitter.username}}</a></p>
                 {% endfor %}
             </div>
         </div>

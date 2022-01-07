@@ -21,17 +21,46 @@
                 </form>
             </div>
             <div class="wrapper-jitts">
-              {% for jitt in jitts %}
-              <div class="jitt">
-                <p class="name">{{ jitt.created_by.username }}</p>
-                <p>{{ jitt.body }}</p>
-                <p class="info">{{ jitt.created_at|naturaltime }}</p>
-              </div>
-              {% endfor %}
-                <div class="jitt" v-for="jitt in jitts">
-                    <p class="name">[[jitt.jitter]]</p>
-                    <p>[[jitt.body]]</p>
-                    <p class="info"> [[jitt.created_at]]</p>
+                  <div class="jitt" v-for="jitt in jitts">
+                        <article class="media">
+                          <figure class="media-left">
+                              <p class="image is-64x64">
+                                      <img :src="jitt.avatar">
+                              </p>
+                          </figure>
+                          <div class="media-content">
+                              <div class="content">
+                                  <p><strong>[[jitt.jitter]]</strong>
+                                  <small>[[jitt.created_at]]</small>
+                                  <br>
+                                  [[jitt.body]]
+                                  </p>
+                              </div>
+                          </div>
+                    </article>
+                  </div>
+                  {% for jitt in jitts %}
+                  <div class="jitt">
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                                {% if jitt.created_by.jitterprofile.avatar %}
+                                    <img src="{{ jitt.created_by.jitterprofile.avatar.url }}" alt="avatar">
+                                {% endif %}
+                            </p>
+                        </figure>
+                        <div class="media-content">
+                            <div class="content">
+                                <p><strong>{{jitt.created_by.username}}</strong>
+                                <small>{{ jitt.created_at|naturaltime}}</small>
+                                <br>
+                                {{ jitt.body }}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                  </div>
+                  {% endfor %}
                 </div>
             </div>
         </div>
@@ -49,8 +78,9 @@
                 jitts: [],
                 body: '',
                 jitter: '{{ request.user.username }}',
-                created_at: 'Now'
-            }
+                created_at: 'Now',
+                avatar: '{% if request.user.jitterprofile.avatar %}{{ request.user.jitterprofile.avatar.url }}{% endif %}'
+              }
         },
         methods: {
             submitJitt(){
@@ -60,7 +90,8 @@
                     var jitt = {
                         'body': this.body,
                         'jitter': this.jitter,
-                        'created_at': this.created_at
+                        'created_at': this.created_at,
+                        'avatar': this.avatar
                     };
                     this.jitts.unshift(jitt);
                     //send to backend

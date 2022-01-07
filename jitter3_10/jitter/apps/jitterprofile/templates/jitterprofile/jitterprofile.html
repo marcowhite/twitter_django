@@ -7,8 +7,15 @@
     <div class="columns">
         <div class="column is-12">
             <h1 class="title">{{user.username}}</h1>
+            {% if user.jitterprofile.avatar %}
+                <figure class="image is-128x128">
+                    <img src="{{ user.jitterprofile.avatar.url }}" alt="avatar">
+                </figure>
+            {% endif %}
+            <hr>
+
             <p><a href="{% url 'followers' user.username %}">Followers: {{user.jitterprofile.followed_by.count}}</a></p>
-            <p>Follows: {{user.jitterprofile.follow.count}}</p>
+            <p><a href="{% url 'follows' user.username %}">Follows: {{user.jitterprofile.follow.count}}</a></p>
             <br>
             {% if user != request.user %}
                 {% if request.user.jitterprofile in user.jitterprofile.followed_by.all %}
@@ -24,9 +31,24 @@
             <div class="wrapper-jitts">
                 {% for jitt in user.jitts.all %}
                     <div class="jitt">
-                        <p class="name">{{jitt.created_by.username}}</p>
-                        <p>{{ jitt.body }}</p>
-                        <p class="info">{{ jitt.created_at|naturaltime}}</p>
+                        <article class="media">
+                            <figure class="media-left">
+                                <p class="image is-64x64">
+                                    {% if user.jitterprofile.avatar %}
+                                        <img src="{{ user.jitterprofile.avatar.url }}" alt="avatar">
+                                    {% endif %}
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p><strong>{{jitt.created_by.username}}</strong>
+                                    <small>{{ jitt.created_at|naturaltime}}</small>
+                                    <br>
+                                    {{ jitt.body }}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
                     </div>
                 {% endfor %}
             </div>
