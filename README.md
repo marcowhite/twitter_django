@@ -2,7 +2,7 @@
 
 python 3.10 django + vue 2.6.4 + bulma
 
-##features
+## features
 admin panel with db classes
 
 sign up + login + logout
