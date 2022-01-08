@@ -14,6 +14,13 @@ def feed(request):
 
     jitts = Jitt.objects.filter(created_by_id__in=userids)
 
+    for jitt in jitts:
+        likes = jitt.likes.filter(created_by_id=request.user.id)
+        if likes.count()>0:
+            jitt.liked = True
+        else:
+            jitt.liked = False
+
     return render(request, 'feed/feed.html', {'jitts':jitts})
 
 @login_required

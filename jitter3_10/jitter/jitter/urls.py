@@ -23,7 +23,7 @@ from apps.core.views import  frontpage , signup
 from apps.feed.views import feed, search
 from apps.jitterprofile.views import edit_profile, follows, jitterprofile, follow_jitter, unfollow_jitter, followers
 
-from apps.feed.api import api_add_jitt
+from apps.feed.api import api_add_like, api_add_jitt
 urlpatterns = [
 
     #
@@ -46,6 +46,7 @@ urlpatterns = [
     #
     # API
     path('api/add_jitt/',api_add_jitt,name='api_add_jitt'),
+    path('api/add_like/',api_add_like,name='api_add_like'),
     #
     # Admin
     path('admin/', admin.site.urls),

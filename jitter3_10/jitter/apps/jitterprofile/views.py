@@ -8,9 +8,17 @@ from .forms import JitterProfileForm
 
 def jitterprofile(request, username):
     user = get_object_or_404(User, username=username)
+    jitts = user.jitts.all()
 
+    for jitt in jitts:
+        likes = jitt.likes.filter(created_by_id=request.user.id)
+        if likes.count()>0:
+            jitt.liked = True
+        else:
+            jitt.liked = False
     context = {
-        'user': user
+        'user': user,
+        'jitts': jitts
     }
 
     return render(request, 'jitterprofile/jitterprofile.html', context)
