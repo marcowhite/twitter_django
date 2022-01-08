@@ -122,7 +122,7 @@
                     };
                     this.jitts.unshift(jitt);
                     //send to backend
-                    fetch('api/add_jitt/',{
+                    fetch('{%url 'api_add_jitt'%}',{
                         method: 'POST',
                         headers:{
                             'Content-Type':'application/json',
