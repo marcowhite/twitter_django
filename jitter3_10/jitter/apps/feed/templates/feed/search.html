@@ -23,9 +23,43 @@
             </form>
             <hr>
             <div class="search-results">
-                {% for jitter in jitters %}
-                    <p><a href="{% url 'jitterprofile' jitter.username%}">{{ jitter.username}}</a></p>
+                {% if not jitters and not jitts%}
+                    <p>No results, please try a different search term.</p>
+                {% endif %}
+                {% if jitters %}
+                    <strong>Jitters</strong>
+                    {% for jitter in jitters %}
+                        <p><a href="{% url 'jitterprofile' jitter.username%}">{{ jitter.username}}</a></p>
+                    {% endfor %}
+                <br>
+                {% endif %}
+                {% if jitts %}
+                {% for jitt in jitts %}
+                <strong>Jitts</strong>
+                    <div class="wrapper-jitts">
+                        <div class="jitt">
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        {% if jitt.created_by.jitterprofile.avatar %}
+                                            <img src="{{ jitt.created_by.jitterprofile.avatar.url }}" alt="avatar">
+                                        {% endif %}
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p><strong><a href="{% url 'jitterprofile' jitt.created_by.username%}">{{jitt.created_by.username}}</a></strong>
+                                        <small>{{ jitt.created_at|naturaltime}}</small>
+                                        <br>
+                                        {{ jitt.body }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
                 {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

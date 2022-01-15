@@ -29,11 +29,14 @@ def search(request):
 
     if len(query)>0:
         jitters = User.objects.filter(username__icontains=query)
+        jitts = Jitt.objects.filter(body__icontains=query)
     else:
         jitters = []
+        jitts = []
 
     context = {
         'query':query,
-        'jitters': jitters
+        'jitters': jitters,
+        'jitts': jitts,
     }
     return render(request, 'feed/search.html', context)

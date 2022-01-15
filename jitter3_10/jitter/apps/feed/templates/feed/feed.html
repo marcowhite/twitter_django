@@ -30,7 +30,7 @@
                           </figure>
                           <div class="media-content">
                               <div class="content">
-                                  <p><strong>[[jitt.jitter]]</strong>
+                                  <p><strong>[jitt.jitter]]</strong>
                                   <small>[[jitt.created_at]]</small>
                                   <br>
                                   [[jitt.body]]
@@ -51,7 +51,7 @@
                         </figure>
                         <div class="media-content">
                             <div class="content">
-                                <p><strong>{{jitt.created_by.username}}</strong>
+                                <p><strong><a href="{% url 'jitterprofile' jitt.created_by.username%}">{{jitt.created_by.username}}</a></strong>
                                 <small>{{ jitt.created_at|naturaltime}}</small>
                                 <br>
                                 {{ jitt.body }}
