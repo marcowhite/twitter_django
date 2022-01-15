@@ -11,7 +11,7 @@ my feed page
 
 to make jitts (tweets)
 
-user search
+user search + jitts search + navbar input
 
 follow/unfollow profile and view followers and follows
 
